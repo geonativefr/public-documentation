@@ -171,6 +171,7 @@ Accept: application/ld+json
 ```
 
 [Documentation OpenAPI](https://api.mygeo.live/api/docs?ui=re_doc#tag/AssignedDevice)
+
 [Upload d'avatars personnalisés](./device-avatar.md)
 
 ### DeviceEvent
