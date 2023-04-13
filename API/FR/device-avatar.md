@@ -1,10 +1,10 @@
-# Device Avatar
+# Avatars personnalisés
 
-Things to know about uploading custom avatars on `/api/assigned-devices/your-assigned-device`.
+Pour uploader des avatars personnalisés sur `/api/assigned-devices/votre-balise`:
 
-## Self-Hosted image
+## Image hébergée par vos soins
 
-You know the URL, just provide it.
+Si vous avez l'URL de l'image, il suffit de la fournir de la manière suivante:
 
 
 ```http
@@ -32,12 +32,12 @@ Content-Type: application/json
 }
 ```
 
-### Uploaded base64 image
+### Uploader une image
 
-Otherwise, we can host your image. Send it as a base64 Data-URI. 
-Our API will upload it on our CDN and return the corresponding URL.
+Dans le cas contraire, nous pouvons l'héberger sur notre CDN. Il suffit de l'envoyer en tant que Data-URI, encodé en base64.
+Notre API s'occupera de l'uploader et de vous retourner l'URL correspondante.
 
-⚠︎ Payloads > 500KB may be refused by our back-end.
+⚠︎ Les payloads > 500Ko peuvent être refusés par notre back-end.
 
 ```http
 PUT /api/assigned-devices/123456
@@ -64,9 +64,9 @@ Content-Type: application/json
 }
 ```
 
-### Clear image
+### Supprimer l'image personnalisée
 
-To get back to a default picture, just explicitely send `null` inside the `avatar` property:
+Pour revenir à une image par défaut, il suffit d'envoyer `null` dans la propriété `avatar` :
 
 ```http
 PUT /api/assigned-devices/123456
@@ -86,3 +86,5 @@ Content-Type: application/json
   "avatar": null
 }
 ```
+
+Si l'image était hébergée sur notre CDN, elle sera automatiquement supprimée.
