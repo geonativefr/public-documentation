@@ -337,7 +337,7 @@ Content-type: application/json
 Accept: application/ld+json
 
 {
-  "email": "me@example.com",
+  "username": "me@example.com",
   "password": "securedPassword",
 }
 ```
