@@ -1,0 +1,14 @@
+### Get account (need a membership_id, get account_id)
+GET {{API_BASE_URL}}/api/accounts?membership={{membership_id}}
+Accept: application/ld+json, application/json
+Content-Type: application/ld+json
+Cookie: jwt_hp={{jwt_token}}
+
+> {%
+    // Retrieve key "id" of the first item in the response and store it in a global variable
+    let accountPosition = 1; // Start from 1
+    let responseJson = response.body;
+    let accountId = responseJson['hydra:member'][accountPosition - 1]['id'];
+    console.log('account_id:', accountId);
+    client.global.set("account_id", accountId);
+%}
