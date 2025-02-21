@@ -1,10 +1,10 @@
-# Documentation API MyGeo
+# Documentation API MyGeoNative
 
-Ce document détaille les points d'entrée API à la plate-forme IoT MyGeo.
+Ce document détaille les points d'entrée API à la plate-forme IoT MyGeoNative.
 
 # Table des matières
 
-- [Documentation API MyGeo](#documentation-api-mygeo)
+- [Documentation API MyGeoNative](#documentation-api-mygeonative)
     - [Informations générales](#informations-gnrales)
     - [Détail des ressources](#dtail-des-ressources)
         - [Account](#account)
@@ -27,17 +27,17 @@ Ce document détaille les points d'entrée API à la plate-forme IoT MyGeo.
 
 ## Informations générales
 
-| Paramètre | Valeur |
-|--|--|
-| Base URI | https://api.mygeo.live  |
-| Entrypoint | [/api](https://api.mygeo.live/api/docs?ui=re_doc#tag/Account) |
-| Hub Mercure | https://api.mygeo.live/.well-known/mercure |
-| Authentification | JWT (Authorization / Cookie) |
-| Refresh tokens | Oui |
-| Fuseau horaire des dates | UTC |
-| Requêtes PATCH | Désactivées |
-| Requêtes PUT | PUT partiel (les propriétés non transmises sont ignorées)
-| CORS | Activé |
+| Paramètre | Valeur                                                        |
+|--|---------------------------------------------------------------|
+| Base URI | https://api.geonative.app                                     |
+| Entrypoint | [/api](https://api.geonative.app/api/docs?ui=re_doc#tag/Account) |
+| Hub Mercure | https://api.geonative.app/.well-known/mercure                 |
+| Authentification | JWT (Authorization / Cookie)                                  |
+| Refresh tokens | Oui                                                           |
+| Fuseau horaire des dates | UTC                                                           |
+| Requêtes PATCH | Désactivées                                                   |
+| Requêtes PUT | PUT partiel (les propriétés non transmises sont ignorées)     
+| CORS | Activé                                                        |
 
 
 ## Détail des ressources
@@ -62,7 +62,7 @@ GET /api/accounts
 Accept: application/ld+json
 ```
 
-[Documentation OpenAPI](https://api.mygeo.live/api/docs?ui=re_doc#tag/Account)
+[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/Account)
 
 ### User
 L'utilisateur est le moyen d'identification à l'API et le moyen d'accès aux comptes liés. De la même manière qu'un *Account* peut être accédé depuis plusieurs `User`, un `User` peut accéder à plusieurs `Account`.
@@ -83,7 +83,7 @@ Liste les utilisateurs auxquels l'utilisateur courant a accès.
 GET /api/users
 Accept: application/ld+json
 ```
-[Documentation OpenAPI](https://api.mygeo.live/api/docs?ui=re_doc#tag/User)
+[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/User)
 
 ###  Membership
 Un `Membership` matérialise la relation entre un `Account` et un `User`.
@@ -105,7 +105,7 @@ GET /api/memberships
 Accept: application/ld+json
 ```
 
-[Documentation OpenAPI](https://api.mygeo.live/api/docs?ui=re_doc#tag/Membership)
+[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/Membership)
 
 ### DeviceModel
 
@@ -120,7 +120,7 @@ Permet de définir les caractéristiques propres à un modèle de balise.
 | capabilities | Fonctionnalités exposées sur le modèle |
 | roles | Roles associés à cet utilisateur pour ce compte |
 
-[Documentation OpenAPI](https://api.mygeo.live/api/docs?ui=re_doc#tag/DeviceModel)
+[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/DeviceModel)
 
 ### Device
 
@@ -144,7 +144,7 @@ GET /api/devices
 Accept: application/ld+json
 ```
 
-[Documentation OpenAPI](https://api.mygeo.live/api/docs?ui=re_doc#tag/Device)
+[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/Device)
 
 ### AssignedDevice
 
@@ -170,7 +170,7 @@ GET /api/assigned-devices
 Accept: application/ld+json
 ```
 
-[Documentation OpenAPI](https://api.mygeo.live/api/docs?ui=re_doc#tag/AssignedDevice)
+[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/AssignedDevice)
 
 
 ### DeviceEvent
@@ -196,7 +196,7 @@ GET /api/device-events?assignedDevice=[iri]
 Accept: application/ld+json
 ```
 
-[Documentation OpenAPI](https://api.mygeo.live/api/docs?ui=re_doc#tag/DeviceEvent)
+[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/DeviceEvent)
 
 
 ### AssignedDeviceGroup
@@ -219,7 +219,7 @@ GET /api/assigned-device-groups
 Accept: application/ld+json
 ```
 
-[Documentation OpenAPI](https://api.mygeo.live/api/docs?ui=re_doc#tag/AssignedDeviceGroup)
+[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/AssignedDeviceGroup)
 
 
 ### AlertPolicy
@@ -249,7 +249,7 @@ GET /api/alert-policies
 Accept: application/ld+json
 ```
 
-[Documentation OpenAPI](https://api.mygeo.live/api/docs?ui=re_doc#tag/AlertPolicy)
+[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/AlertPolicy)
 
 ### AssignedDeviceTriggeredAlert
 Représente un déclenchement d'alerte.
@@ -277,7 +277,7 @@ GET /api/assigned-device-triggered-alerts?assignedDevice=[iri]&pagination=1&item
 Accept: application/ld+json
 ```
 
-[Documentation OpenAPI](https://api.mygeo.live/api/docs?ui=re_doc#tag/AssignedDeviceTriggeredAlert)
+[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/AssignedDeviceTriggeredAlert)
 
 ### Zone
 Représente une zone géographique
@@ -302,7 +302,7 @@ GET /api/zones
 Accept: application/ld+json
 ```
 
-[Documentation OpenAPI](https://api.mygeo.live/api/docs?ui=re_doc#tag/AssignedDeviceTriggeredAlert)
+[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/AssignedDeviceTriggeredAlert)
 
 ## Enregistrement et identification utilisateur
 
