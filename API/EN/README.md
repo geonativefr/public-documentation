@@ -337,7 +337,8 @@ Accept: application/ld+json
 }
 ```
 
-The API will return a `User` type resource with additional properties `token` and `refreshToken`.
+The API will return a `User`.
+You will find in the response headers the cookies `jwt_hp` which corresponds to the token and `refreshToken`.
 The `token` corresponds to a time-limited JWT that can be exchanged for a valid (single-use) `refreshToken`.
 The `token` is also provided in the response headers in the cookies `jwt_hp` (containing header + payload) and `jwt_s` (containing the signature). For better security, it is recommended not to manipulate tokens client-side and to rely [only on cookies](https://curity.io/resources/learn/split-token-pattern/).
 
