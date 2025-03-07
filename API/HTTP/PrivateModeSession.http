@@ -1,0 +1,42 @@
+### List (get one private mode session id)
+GET {{API_BASE_URL}}/api/private-mode-sessions?account={{account_id}}
+Accept: application/ld+json, application/json
+Content-Type: application/ld+json
+Cookie: jwt_hp={{jwt_token}}
+
+> {%
+    // Retrieve key "id" of the first item in the response and store it in a global variable
+    let privateModeSessionPosition = 1; // Start from 1
+    let responseJson = response.body;
+    let privateModeSessionId = responseJson['hydra:member'][privateModeSessionPosition - 1]['id'];
+    console.log('private_mode_session_id:', privateModeSessionId);
+    client.global.set("private_mode_session_id", privateModeSessionId);
+%}
+
+### Create a private mode session
+POST {{API_BASE_URL}}/api/private-mode-sessions
+Accept: application/ld+json, application/json
+Content-Type: application/ld+json
+
+{
+    "account": "/api/accounts/{{account_id}}",
+    "device": "/api/devices/{{device_id}}",
+    "startAt": "2022-01-01T00:00:00Z",
+    "endAt": "2022-01-01T01:00:00Z"
+}
+
+### Detail (need a private_mode_session_id)
+GET {{API_BASE_URL}}/api/private-mode-sessions/{{private_mode_session_id}}
+Accept: application/ld+json, application/json
+Content-Type: application/ld+json
+Cookie: jwt_hp={{jwt_token}}
+
+### Update (need a private_mode_session_id)
+PUT {{API_BASE_URL}}/api/private-mode-sessions/{{private_mode_session_id}}
+Accept: application/ld+json, application/json
+Content-Type: application/ld+json
+
+{
+    "startAt": "2022-01-01T00:00:00Z",
+    "endAt": "2022-01-01T01:00:00Z"
+}
