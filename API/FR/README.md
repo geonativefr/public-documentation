@@ -612,7 +612,7 @@ Représente un accès temporaire à une balise avec une date d'expiration.
 
 #### Principales propriétés
 | Propriété | Description  |
-|--|||
+|--|--|
 | id | [ULID](https://github.com/ulid/spec#universally-unique-lexicographically-sortable-identifier) de la ressource |
 | createdAt | Date de création |
 | assignedDevice | IRI de l'`AssignedDevice` |
