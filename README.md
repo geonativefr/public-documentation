@@ -4,8 +4,6 @@ Documentation officielle de l'API de la plateforme IoT MyGeoNative.
 
 ### Documentation utilisateur
 
-- 📖 **[Documentation API](./API/FR/README.md)** - Documentation complète
-- 🌐 **[Documentation Swagger](https://geonativefr.github.io/public-documentation/)** - Interface interactive OpenAPI
 - 📖 **[Documentation API complète (Français)](./API/FR/README.md)**
 - 📖 **[Documentation Swagger](./API/openapi/openapi.html)**
 
@@ -39,7 +37,6 @@ Cette documentation détaille l'ensemble des ressources disponibles, incluant :
 - VehicleData (templates de consommation)
 - RideSection (trajets et statistiques)
 
-Cette documentation détaille l'ensemble des ressources disponibles.
 #### Contrôle d'accès avancé
 - AssignedDeviceGrant (permissions granulaires)
 - AssignedDeviceUser (relations utilisateur-balise)
