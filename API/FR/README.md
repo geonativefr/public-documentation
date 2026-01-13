@@ -2,6 +2,10 @@
 
 Ce document détaille les points d'entrée API à la plate-forme IoT MyGeoNative.
 
+## Supports de documentation
+
+- [Swagger](../openapi/openapi.html)
+
 # Table des matières
 
 - [Documentation API MyGeoNative](#documentation-api-mygeonative)
@@ -57,11 +61,6 @@ Ce document détaille les points d'entrée API à la plate-forme IoT MyGeoNative
 | Requêtes PUT | PUT partiel (les propriétés non transmises sont ignorées)
 | CORS | Activé                                                        |
 | Documentation JSON | [OpenAPI](../openapi/openapi.json)                                     |
-
-## Supports de documentation
-
- - [Documentation OpenAPI (JSON)](../openapi.json) 
- - [Documentation OpenAPI (YAML)](../openapi.yaml)
 
 
 ## Détail des ressources
