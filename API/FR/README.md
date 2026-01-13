@@ -2,10 +2,6 @@
 
 Ce document détaille les points d'entrée API à la plate-forme IoT MyGeoNative.
 
-## Supports de documentation
-
-- [Swagger](../openapi/openapi.html)
-
 # Table des matières
 
 - [Documentation API MyGeoNative](#documentation-api-mygeonative)
