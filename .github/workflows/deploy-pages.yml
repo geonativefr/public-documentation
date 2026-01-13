@@ -2,8 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches:
-      - feat-doc-maj
+    branches: ["main", "feat-doc-maj"]
   workflow_dispatch:
 
 permissions:
