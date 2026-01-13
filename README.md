@@ -4,8 +4,8 @@ Documentation officielle de l'API de la plateforme IoT MyGeoNative.
 
 ### Documentation utilisateur
 
-- 📖 **[Documentation API](./API/FR/README.md)**
-- 📖 **[Documentation Swagger](./API/openapi/openapi.html)**
+- 📖 **[Documentation API](./API/FR/README.md)** - Documentation complète
+- 🌐 **[Documentation Swagger](https://geonativefr.github.io/public-documentation/)** - Interface interactive OpenAPI
 
 Cette documentation détaille l'ensemble des ressources disponibles.
 
