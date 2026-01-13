@@ -76,18 +76,18 @@ Les topics Mercure correspondent aux IRIs des ressources. Vous pouvez vous abonn
 
 **Ressources supportant les mises à jour temps réel :**
 
-- `assigned-devices` - Mises à jour des balises assignées
-- `assigned-device-triggered-alerts` - Déclenchements d'alertes
-- `assigned-device-triggered-actions` - Exécution d'actions
-- `assigned-device-groups` - Groupes de balises
-- `accounts` - Comptes
-- `users` - Utilisateurs
-- `memberships` - Relations utilisateur-compte
-- `alert-policies` - Polices d'alerte
-- `zones` - Zones géographiques
-- `reports` - Génération de rapports
-- `push-subscriptions` - Abonnements push
-- `private-mode-sessions` - Sessions mode privé
+- `/api/assigned-devices` - Mises à jour des balises assignées
+- `/api/assigned-device-triggered-alerts` - Déclenchements d'alertes
+- `/api/assigned-device-triggered-actions` - Exécution d'actions
+- `/api/assigned-device-groups` - Groupes de balises
+- `/api/accounts` - Comptes
+- `/api/users` - Utilisateurs
+- `/api/memberships` - Relations utilisateur-compte
+- `/api/alert-policies` - Polices d'alerte
+- `/api/zones` - Zones géographiques
+- `/api/reports` - Génération de rapports
+- `/api/push-subscriptions` - Abonnements push
+- `/api/private-mode-sessions` - Sessions mode privé
 
 **Exemples d'abonnement :**
 
@@ -106,4 +106,4 @@ Les mises à jour des ressources sont envoyées automatiquement au format JSON-L
 
 ## Licence
 
-© 2025 GeoNative. Tous droits réservés.
+© 2026 GeoNative. Tous droits réservés.
