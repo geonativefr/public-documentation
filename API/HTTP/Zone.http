@@ -1,0 +1,14 @@
+### Get zones of account (need an account_id, get zone_id)
+GET {{API_BASE_URL}}/api/zones?account={{account_id}}
+Accept: application/ld+json, application/json
+Content-Type: application/ld+json
+Cookie: jwt_hp={{jwt_token}}
+
+> {%
+    // Retrieve key "id" of the first item in the response and store it in a global variable
+    let zonePosition = 1; // Start from 1
+    let responseJson = response.body;
+    let zoneId = responseJson['hydra:member'][zonePosition - 1]['id'];
+    console.log('zone_id:', zoneId);
+    client.global.set("zone_id", zoneId);
+%}

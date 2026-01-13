@@ -1,0 +1,30 @@
+### List (get one assigned device id)
+GET {{API_BASE_URL}}/api/assigned-devices
+Accept: application/ld+json, application/json
+Content-Type: application/ld+json
+Cookie: jwt_hp={{jwt_token}}
+
+> {%
+    // Retrieve key "id" of the first item in the response and store it in a global variable
+    let assignedDevicePosition = 2; // Start from 1
+    let responseJson = response.body;
+    let assignedDeviceId = responseJson['hydra:member'][assignedDevicePosition - 1]['id'];
+    console.log('assigned_device_id:', assignedDeviceId);
+    client.global.set("assigned_device_id", assignedDeviceId);
+
+    // Show all assigned devices position, id and name
+    let assignedDevices = responseJson['hydra:member'];
+    for (let i = 0; i < assignedDevices.length; i++) {
+        console.log('assigned_device:', i + 1, '#'+assignedDevices[i]['id'], 'name:', assignedDevices[i]['name']);
+    }
+%}
+
+### Detail (need an assigned_device_id)
+GET {{API_BASE_URL}}/api/assigned-devices/{{assigned_device_id}}
+Accept: application/ld+json, application/json
+Content-Type: application/ld+json
+Cookie: jwt_hp={{jwt_token}}
+
+
+
+

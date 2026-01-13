@@ -1,0 +1,20 @@
+### Get memberships of user (need a user_id, get membership_id)
+GET {{API_BASE_URL}}/api/memberships?user={{user_id}}
+Accept: application/ld+json, application/json
+Content-Type: application/ld+json
+Cookie: jwt_hp={{jwt_token}}
+
+> {%
+    // Retrieve key "id" of the first item in the response and store it in a global variable
+    let membershipPosition = 1; // Start from 1
+    let responseJson = response.body;
+    let membershipId = responseJson['hydra:member'][membershipPosition - 1]['id'];
+    console.log('membership_id:', membershipId);
+    client.global.set("membership_id", membershipId);
+
+    // Show all memberships (position, id, name)
+    let memberships = responseJson['hydra:member'];
+    for (let i = 0; i < memberships.length; i++) {
+        console.log('membership:', i + 1, memberships[i]['id']);
+    }
+%}

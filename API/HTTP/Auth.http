@@ -1,0 +1,33 @@
+### Login (get jwt_token)
+POST {{API_BASE_URL}}/api/auth/login
+Accept: application/ld+json, application/json
+Content-Type: application/ld+json
+
+{
+  "username": "{{USERNAME}}",
+  "password": "{{PASSWORD}}"
+}
+
+> {%
+    // Retrieve the JWT token from the response headers and store it in a global variable
+    let cookies = response.headers.valueOf("set-cookie");
+    let jwtMatch = cookies.match(/jwt_hp=([^;]+)/);
+    if (jwtMatch) {
+        client.global.set("jwt_token", jwtMatch[1]);
+    }
+    console.log('jwt_token:', client.global.get("jwt_token"));
+%}
+
+### Check auth (get user_id)
+GET {{API_BASE_URL}}/api/auth/login
+Accept: application/ld+json, application/json
+Content-Type: application/ld+json
+Cookie: jwt_hp={{jwt_token}}
+
+> {%
+    // Retrieve id of user from the response and store it in a global variable
+    let responseJson = response.body;
+    let userId = responseJson['id'];
+    console.log('user_id:', userId);
+    client.global.set("user_id", userId);
+%}
