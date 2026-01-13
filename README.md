@@ -63,7 +63,7 @@ Authorization: Bearer VOTRE_JWT_TOKEN
 
 ## Mises à jour en temps réel (Mercure)
 
-L'API supporte les mises à jour en temps réel via Mercure (SSE - Server-Sent Events) :
+L'API supporte les mises à jour en temps réel via [Mercure (SSE - Server-Sent Events)](https://mercure.rocks/docs/getting-started) :
 
 ```http
 GET https://api.geonative.app/.well-known/mercure?topic=*
