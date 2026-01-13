@@ -4,53 +4,12 @@ Documentation officielle de l'API de la plateforme IoT MyGeoNative.
 
 ### Documentation utilisateur
 
-- 📖 **[Documentation API complète (Français)](./API/FR/README.md)**
+- 📖 **[Documentation API](./API/FR/README.md)**
 - 📖 **[Documentation Swagger](./API/openapi/openapi.html)**
 
-Cette documentation détaille l'ensemble des ressources disponibles, incluant :
+Cette documentation détaille l'ensemble des ressources disponibles.
 
-#### Gestion des utilisateurs et comptes
-- Account, User, Membership
-- Authentification JWT
-- Gestion des rôles et permissions
-
-#### Gestion des balises et dispositifs
-- Device, DeviceModel, AssignedDevice
-- DeviceEvent (historique des événements)
-- AssignedDeviceGroup (groupes de balises)
-
-#### Système d'alertes
-- AlertPolicy (configuration des alertes)
-- AssignedDeviceTriggeredAlert (alertes déclenchées)
-- AssignedDeviceTriggeredAction (actions exécutées)
-
-#### Géolocalisation et zones
-- Zone (zones géographiques)
-- AssignedDeviceZone (historique de présence)
-
-#### Balises BLE
-- Tag (balises Bluetooth)
-- AssignedTag (assignations de balises BLE)
-
-#### Gestion de flotte
-- AssignedDeviceVehicleData (données véhicule)
-- VehicleData (templates de consommation)
-- RideSection (trajets et statistiques)
-
-#### Contrôle d'accès avancé
-- AssignedDeviceGrant (permissions granulaires)
-- AssignedDeviceUser (relations utilisateur-balise)
-- TemporaryAssignedDeviceAccess (accès temporaires)
-
-#### Fonctionnalités additionnelles
-- Report (génération de rapports)
-- App / AccountApp (personnalisation white-label)
-- PushSubscription (notifications push)
-- PrivateModeSession (mode privé)
-- AuthenticationLog (logs d'audit)
-- AssignedDeviceMode (historique des modes)
-
-### Spécification OpenAPI
+### OpenAPI
 
 La spécification OpenAPI complète est disponible dans deux formats :
 
@@ -111,10 +70,37 @@ GET https://api.geonative.app/.well-known/mercure?topic=*
 Authorization: Bearer VOTRE_JWT_TOKEN
 ```
 
-### Topics disponibles :
+### Topics disponibles
 
-- `assigned-devices`
-- `assigned-device-triggered-alerts`
+Les topics Mercure correspondent aux IRIs des ressources. Vous pouvez vous abonner à des ressources spécifiques ou utiliser `*` pour recevoir toutes les mises à jour autorisées.
+
+**Ressources supportant les mises à jour temps réel :**
+
+- `assigned-devices` - Mises à jour des balises assignées
+- `assigned-device-triggered-alerts` - Déclenchements d'alertes
+- `assigned-device-triggered-actions` - Exécution d'actions
+- `assigned-device-groups` - Groupes de balises
+- `accounts` - Comptes
+- `users` - Utilisateurs
+- `memberships` - Relations utilisateur-compte
+- `alert-policies` - Polices d'alerte
+- `zones` - Zones géographiques
+- `reports` - Génération de rapports
+- `push-subscriptions` - Abonnements push
+- `private-mode-sessions` - Sessions mode privé
+
+**Exemples d'abonnement :**
+
+```http
+# Toutes les mises à jour autorisées
+GET https://api.geonative.app/.well-known/mercure?topic=*
+
+# Les Balises de votre compte
+GET https://api.geonative.app/.well-known/mercure?topic=api/assigned-devices
+
+# Balise spécifique
+GET https://api.geonative.app/.well-known/mercure?topic=api/assigned-devices/{id}
+```
 
 Les mises à jour des ressources sont envoyées automatiquement au format JSON-LD.
 
