@@ -39,6 +39,11 @@ Ce document détaille les points d'entrée API à la plate-forme IoT MyGeoNative
 | Requêtes PUT | PUT partiel (les propriétés non transmises sont ignorées)     
 | CORS | Activé                                                        |
 
+## Supports de documentation
+
+ - [Documentation OpenAPI (JSON)](../openapi.json) 
+ - [Documentation OpenAPI (YAML)](../openapi.yaml)
+
 
 ## Détail des ressources
 
@@ -61,8 +66,6 @@ Liste les comptes auquel l'utilisateur courant a accès.
 GET /api/accounts
 Accept: application/ld+json
 ```
-
-[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/Account)
 
 ### User
 L'utilisateur est le moyen d'identification à l'API et le moyen d'accès aux comptes liés. De la même manière qu'un *Account* peut être accédé depuis plusieurs `User`, un `User` peut accéder à plusieurs `Account`.
