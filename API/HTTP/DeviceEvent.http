@@ -1,0 +1,14 @@
+### Get events of an assigned device (need a assigned_device_id, get event_id)
+GET {{API_BASE_URL}}/api/device-events?assignedDevice={{assigned_device_id}}
+Accept: application/ld+json, application/json
+Content-Type: application/ld+json
+Cookie: jwt_hp={{jwt_token}}
+
+> {%
+    // Retrieve key "id" of the first item in the response and store it in a global variable
+    let eventPosition = 1; // Start from 1
+    let responseJson = response.body;
+    let eventId = responseJson['hydra:member'][eventPosition - 1]['id'];
+    console.log('event_id:', eventId);
+    client.global.set("event_id", eventId);
+%}

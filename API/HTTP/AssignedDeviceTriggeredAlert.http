@@ -1,0 +1,14 @@
+# Get assigned device triggered alerts (need a assigned_device_id, get triggered_alert_id)
+GET {{API_BASE_URL}}/api/assigned-device-triggered-alerts?assignedDevice={{assigned_device_id}}
+Accept: application/ld+json, application/json
+Content-Type: application/ld+json
+Cookie: jwt_hp={{jwt_token}}
+
+> {%
+    // Retrieve key "id" of the first item in the response and store it in a global variable
+    let triggeredAlertPosition = 1; // Start from 1
+    let responseJson = response.body;
+    let triggeredAlertId = responseJson['hydra:member'][triggeredAlertPosition - 1]['id'];
+    console.log('triggered_alert_id:', triggeredAlertId);
+    client.global.set("triggered_alert_id", triggeredAlertId);
+%}

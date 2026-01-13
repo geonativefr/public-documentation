@@ -1,0 +1,14 @@
+### Get list of alert policies of account (need an account_id, get alert_policy_id)
+GET {{API_BASE_URL}}/api/alert-policies?account={{account_id}}
+Accept: application/ld+json, application/json
+Content-Type: application/ld+json
+Cookie: jwt_hp={{jwt_token}}
+
+> {%
+    // Retrieve key "id" of the first item in the response and store it in a global variable
+    let alertPolicyPosition = 1; // Start from 1
+    let responseJson = response.body;
+    let alertPolicyId = responseJson['hydra:member'][alertPolicyPosition - 1]['id'];
+    console.log('alert_policy_id:', alertPolicyId);
+    client.global.set("alert_policy_id", alertPolicyId);
+%}

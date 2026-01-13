@@ -5,8 +5,9 @@ Ce document détaille les points d'entrée API à la plate-forme IoT MyGeoNative
 # Table des matières
 
 - [Documentation API MyGeoNative](#documentation-api-mygeonative)
-    - [Informations générales](#informations-gnrales)
-    - [Détail des ressources](#dtail-des-ressources)
+    - [Informations générales](#informations-générales)
+    - [Supports de documentation](#supports-de-documentation)
+    - [Détail des ressources](#détail-des-ressources)
         - [Account](#account)
         - [User](#user)
         - [Membership](#membership)
@@ -17,10 +18,27 @@ Ce document détaille les points d'entrée API à la plate-forme IoT MyGeoNative
         - [AssignedDeviceGroup](#assigneddevicegroup)
         - [AlertPolicy](#alertpolicy)
         - [AssignedDeviceTriggeredAlert](#assigneddevicetriggeredalert)
+        - [AssignedDeviceTriggeredAction](#assigneddevicetriggeredaction)
         - [Zone](#zone)
+        - [AssignedDeviceZone](#assigneddevicezone)
+        - [Tag](#tag)
+        - [AssignedTag](#assignedtag)
+        - [AssignedDeviceVehicleData](#assigneddevicevehicledata)
+        - [VehicleData](#vehicledata)
+        - [RideSection](#ridesection)
+        - [AssignedDeviceGrant](#assigneddevicegrant)
+        - [AssignedDeviceUser](#assigneddeviceuser)
+        - [TemporaryAssignedDeviceAccess](#temporaryassigneddeviceaccess)
+        - [AssignedDeviceMode](#assigneddevicemode)
+        - [Report](#report)
+        - [App](#app)
+        - [AccountApp](#accountapp)
+        - [PushSubscription](#pushsubscription)
+        - [PrivateModeSession](#privatemodesession)
+        - [AuthenticationLog](#authenticationlog)
     - [Enregistrement et identification utilisateur](#enregistrement-et-identification-utilisateur)
         - [Enregistrement anonyme (nouvel utilisateur + nouveau compte)](#enregistrement-anonyme-nouvel-utilisateur--nouveau-compte)
-        - [Ajout d'un utilisateur à un compte ou un compte à un utilisateur](#ajout-dun-utilisateur--un-compte-ou-un-compte--un-utilisateur)
+        - [Ajout d'un utilisateur à un compte ou un compte à un utilisateur](#ajout-dun-utilisateur-à-un-compte-ou-un-compte-à-un-utilisateur)
         - [Login](#login)
     - [Connexion Mercure](#connexion-mercure)
         - [Exemple d'usage](#exemple-dusage)
@@ -36,8 +54,9 @@ Ce document détaille les points d'entrée API à la plate-forme IoT MyGeoNative
 | Refresh tokens | Oui                                                           |
 | Fuseau horaire des dates | UTC                                                           |
 | Requêtes PATCH | Désactivées                                                   |
-| Requêtes PUT | PUT partiel (les propriétés non transmises sont ignorées)     
+| Requêtes PUT | PUT partiel (les propriétés non transmises sont ignorées)
 | CORS | Activé                                                        |
+| Documentation JSON | [OpenAPI](../openapi/openapi.json)                                     |
 
 
 ## Détail des ressources
@@ -53,19 +72,32 @@ La relation entre un `Account` et un `User` est matérialisée sous la ressource
 | id | [ULID](https://github.com/ulid/spec#universally-unique-lexicographically-sortable-identifier) de la ressource |
 | createdAt | Date de création |
 | name | Nom du compte |
+| status | Statut du compte |
+| accountApp | IRI de l'`AccountApp` (configuration d'application personnalisée) |
+| daysToPruneDeviceEvents | Nombre de jours avant suppression automatique des événements |
+| lastAccessAt | Date du dernier accès au compte |
+| assignedDeviceVisibilityPolicy | Politique de visibilité des balises |
+| preferences | Préférences du compte |
 
-#### Examples d'accès
+#### Exemples d'accès
 ##### Liste
-Liste les comptes auquel l'utilisateur courant a accès.
+Liste les comptes auxquels l'utilisateur courant a accès.
 ```http
 GET /api/accounts
 Accept: application/ld+json
 ```
 
+##### Nouveaux endpoints
+```http
+POST /api/accounts/{account}/update-last-access-at
+GET /api/accounts/{account}/last-triggered-alerts-by-alert-policies
+GET /api/accounts/{account}/last-triggered-alerts-by-assigned-devices
+```
+
 [Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/Account)
 
 ### User
-L'utilisateur est le moyen d'identification à l'API et le moyen d'accès aux comptes liés. De la même manière qu'un *Account* peut être accédé depuis plusieurs `User`, un `User` peut accéder à plusieurs `Account`.
+L'utilisateur est le moyen d'identification à l'API et le moyen d'accès aux comptes liés. De la même manière qu'un `Account` peut être accédé depuis plusieurs `User`, un `User` peut accéder à plusieurs `Account`.
 La relation entre un `User` et un `Account` est matérialisée sous la ressource `Membership`.
 
 #### Principales propriétés
@@ -75,8 +107,12 @@ La relation entre un `User` et un `Account` est matérialisée sous la ressource
 | createdAt | Date de création |
 | email | Adresse e-mail |
 | fullName | Nom complet de l'utilisateur |
+| avatar | Avatar de l'utilisateur |
+| features | Fonctionnalités activées pour l'utilisateur |
+| lastLoginAt | Date de la dernière connexion |
+| preferences | Préférences de l'utilisateur |
 
-#### Examples d'accès
+#### Exemples d'accès
 ##### Liste
 Liste les utilisateurs auxquels l'utilisateur courant a accès.
 ```http
@@ -95,9 +131,11 @@ Un `Membership` matérialise la relation entre un `Account` et un `User`.
 | createdAt | Date de création |
 | account | IRI du compte |
 | user | IRI de l'utilisateur |
-| roles | Roles associés à cet utilisateur pour ce compte |
+| roles | Rôles associés à cet utilisateur pour ce compte |
+| assignedDeviceGrants | IRIs des `AssignedDeviceGrant` (permissions granulaires sur les balises) |
+| preferences | Préférences du membership |
 
-#### Examples d'accès
+#### Exemples d'accès
 ##### Liste
 Liste les memberships auxquels l'utilisateur courant a accès.
 ```http
@@ -118,7 +156,6 @@ Permet de définir les caractéristiques propres à un modèle de balise.
 | createdAt | Date de création |
 | name | Nom du modèle |
 | capabilities | Fonctionnalités exposées sur le modèle |
-| roles | Roles associés à cet utilisateur pour ce compte |
 
 [Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/DeviceModel)
 
@@ -134,9 +171,11 @@ Représente une balise physique.
 | model | IRI du `DeviceModel` |
 | serialNumber | Numéro de série |
 | assignment | IRI de l'assignation courante `AssignedDevice` |
-| properties | Propriétés du matériel (IMEI, ICCID, etc)
+| properties | Propriétés du matériel (IMEI, ICCID, etc) |
+| systemConfiguration | Configuration système |
+| status | Statut du device |
 
-#### Examples d'accès
+#### Exemples d'accès
 ##### Liste
 Liste les `Device` auxquels l'utilisateur courant a accès.
 ```http
@@ -155,40 +194,68 @@ Représente la relation (actuelle ou passée) entre un `Device` et un `Account`.
 |--|--|
 | id | [ULID](https://github.com/ulid/spec#universally-unique-lexicographically-sortable-identifier) de la ressource |
 | createdAt | Date de création |
+| name | Nom de la balise assignée |
 | assignedAt | Date d'assignation |
 | revokedAt | Date de révocation |
 | account | IRI du compte |
 | device | IRI du device |
-| state | Etat de la balise (localisation, batterie, etc) |
-| current | Assignation courante (true) / passée (false)
+| groups | IRIs des `AssignedDeviceGroup` |
+| state | État de la balise (localisation, batterie, etc) |
+| stateUpdatedAt | Date de la dernière mise à jour d'état |
+| current | Assignation courante (true) / passée (false) |
+| status | Statut de l'assignation |
+| configuration | Configuration de la balise |
+| vehicleData | IRI de l'`AssignedDeviceVehicleData` (données véhicule) |
+| grants | IRIs des `AssignedDeviceGrant` (permissions) |
+| daysToPruneDeviceEvents | Nombre de jours avant suppression des événements |
+| serialNumber | Numéro de série (depuis le device) |
+| imei | IMEI (depuis le device) |
+| avatar | Avatar de la balise |
+| temporaryAssignedDeviceAccesses | IRIs des accès temporaires |
+| capabilities | Capacités de la balise |
+| preferences | Préférences de la balise |
 
-#### Examples d'accès
+#### Exemples d'accès
 ##### Liste
-Liste les `Device` auxquels l'utilisateur courant a accès.
+Liste les `AssignedDevice` auxquels l'utilisateur courant a accès.
 ```http
 GET /api/assigned-devices
 Accept: application/ld+json
+```
+
+##### Export
+Exporte les balises assignées.
+```http
+GET /api/assigned-devices/export
+Accept: application/ld+json
+```
+
+##### Mise à jour d'état
+Met à jour directement l'état d'une balise.
+```http
+PUT /api/assigned-devices/{id}/update-state
+Content-type: application/json
 ```
 
 [Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/AssignedDevice)
 
 
 ### DeviceEvent
-Représente un évènement (changement d'état) de la balise.
+Représente un événement (changement d'état) de la balise.
 
 #### Principales propriétés
 | Propriété | Description  |
 |--|--|
 | id | [ULID](https://github.com/ulid/spec#universally-unique-lexicographically-sortable-identifier) de la ressource |
 | createdAt | Date de création |
-| eventDate | Date de l'évènement (remonté par la balise) |
+| eventDate | Date de l'événement (remonté par la balise) |
 | account | IRI du compte |
 | assignedDevice | IRI de l'`AssignedDevice` |
-| stateBefore | Etat de la balise avant l'évènement |
-| stateChangeSet | Propriétés modifiées lors de l'évènement |
-| stateAfter | Etat de la balise après l'évènement |
+| stateBefore | État de la balise avant l'événement |
+| stateChangeSet | Propriétés modifiées lors de l'événement |
+| stateAfter | État de la balise après l'événement |
 
-#### Examples d'accès
+#### Exemples d'accès
 ##### Liste
 Liste les `DeviceEvent` d'une balise:
 ```http
@@ -210,8 +277,9 @@ Représente un groupe de balises.
 | name | Nom du groupe |
 | account | IRI du compte |
 | assignedDevices | IRIs des `AssignedDevice` |
+| options | Options du groupe |
 
-#### Examples d'accès
+#### Exemples d'accès
 ##### Liste
 Liste les groupes:
 ```http
@@ -230,7 +298,7 @@ Représente une configuration d'alerte (police d'alerte).
 |--|--|
 | id | [ULID](https://github.com/ulid/spec#universally-unique-lexicographically-sortable-identifier) de la ressource |
 | createdAt | Date de création |
-| name | Nom du groupe |
+| name | Nom de la police d'alerte |
 | account | IRI du compte |
 | assignedDevices | IRIs des `AssignedDevice` auxquels l'alerte s'applique |
 | assignedDeviceGroups | IRIs des `AssignedDeviceGroup` auxquels l'alerte s'applique |
@@ -238,10 +306,15 @@ Représente une configuration d'alerte (police d'alerte).
 | level | Niveau d'alerte |
 | rule | Règle de déclenchement |
 | contextualRule | Règle contextuelle de déclenchement |
+| confirmationRule | Règle de confirmation |
+| weeklyScheduleTimes | Plages horaires hebdomadaires |
 | actions | Actions à déclencher |
+| active | Alerte active ou non |
 | autoResolvable | Si l'alerte peut se résoudre seule (au changement d'état) |
+| runsOnSchedule | Si l'alerte fonctionne selon un planning |
+| preferences | Préférences de la police d'alerte |
 
-#### Examples d'accès
+#### Exemples d'accès
 ##### Liste
 Liste les polices d'alerte:
 ```http
@@ -260,16 +333,23 @@ Représente un déclenchement d'alerte.
 | id | [ULID](https://github.com/ulid/spec#universally-unique-lexicographically-sortable-identifier) de la ressource |
 | createdAt | Date de création |
 | account | IRI du compte |
+| level | Niveau de l'alerte |
 | alertPolicy | IRI de la police d'alerte |
 | assignedDevice | IRI de l'`AssignedDevice` ayant déclenché l'alerte |
-| state | Etat de la balise au moment de l'alerte |
+| state | État de la balise au moment de l'alerte |
+| event | IRI de l'événement ayant déclenché l'alerte |
+| eventDate | Date de l'événement |
 | status | Statut de l'alerte (en cours, annulée, confirmée, résolue) |
 | acknowledgement | Statut de l'acquittement (en cours, acquittée, reportée) |
+| snoozedUntil | Date jusqu'à laquelle l'alerte est reportée |
 | confirmedAt | Date de confirmation |
 | acknowledgedAt | Date d'acquittement |
 | acknowledgedBy | Utilisateur ayant acquitté |
+| actions | Actions déclenchées |
+| rule | Règle ayant déclenché l'alerte |
+| context | Contexte de déclenchement |
 
-#### Examples d'accès
+#### Exemples d'accès
 ##### Liste
 Liste les 5 alertes récentes d'une balise:
 ```http
@@ -277,10 +357,36 @@ GET /api/assigned-device-triggered-alerts?assignedDevice=[iri]&pagination=1&item
 Accept: application/ld+json
 ```
 
+##### Suppression par lot
+Supprime plusieurs alertes en une seule requête:
+```http
+POST /api/assigned-device-triggered-alerts/batch-delete/account/{account}
+Content-type: application/json
+```
+
 [Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/AssignedDeviceTriggeredAlert)
 
+### AssignedDeviceTriggeredAction
+Représente l'exécution d'une action déclenchée par une alerte (logs d'actions).
+
+#### Principales propriétés
+| Propriété | Description  |
+|--|--|
+| id | [ULID](https://github.com/ulid/spec#universally-unique-lexicographically-sortable-identifier) de la ressource |
+| createdAt | Date de création |
+
+#### Exemples d'accès
+##### Liste
+Liste les actions déclenchées:
+```http
+GET /api/assigned-device-triggered-actions
+Accept: application/ld+json
+```
+
+[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/AssignedDeviceTriggeredAction)
+
 ### Zone
-Représente une zone géographique
+Représente une zone géographique. Une zone peut être définie soit par un ou plusieurs polygones (MultiPolygon), soit par un point central et une distance (zone circulaire).
 
 #### Principales propriétés
 | Propriété | Description  |
@@ -289,12 +395,14 @@ Représente une zone géographique
 | createdAt | Date de création |
 | account | IRI du compte |
 | name | Nom de la zone |
-| area | Multipolygone GEOJSON |
-| center | Point centrale (si zone circulaire) |
-| distance | Distance en mètres (si zone circulaire) |
+| areas | MultiPolygone GeoJSON (pour zones polygonales) |
+| center | Point central GeoJSON (pour zone circulaire) |
+| distance | Distance en mètres depuis le centre (pour zone circulaire) |
+| deviceModelProtocol | Protocole du modèle de device |
+| preferences | Préférences de la zone |
 
 
-#### Examples d'accès
+#### Exemples d'accès
 ##### Liste
 Liste les zones
 ```http
@@ -302,7 +410,388 @@ GET /api/zones
 Accept: application/ld+json
 ```
 
-[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/AssignedDeviceTriggeredAlert)
+[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/Zone)
+
+### AssignedDeviceZone
+Représente la relation entre une balise et une zone (historique de présence en zone).
+
+#### Principales propriétés
+| Propriété | Description  |
+|--|--|
+| id | [ULID](https://github.com/ulid/spec#universally-unique-lexicographically-sortable-identifier) de la ressource |
+| assignedDevice | IRI de l'`AssignedDevice` |
+| zone | IRI de la `Zone` |
+
+#### Exemples d'accès
+##### Liste
+Liste les relations balise-zone:
+```http
+GET /api/assigned-device-zones
+Accept: application/ld+json
+```
+
+[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/AssignedDeviceZone)
+
+### Tag
+Représente une balise BLE (Bluetooth Low Energy) / beacon physique.
+
+#### Principales propriétés
+| Propriété | Description  |
+|--|--|
+| id | [ULID](https://github.com/ulid/spec#universally-unique-lexicographically-sortable-identifier) de la ressource |
+| createdAt | Date de création |
+| macAddress | Adresse MAC de la balise BLE |
+| assignment | IRI de l'assignation courante `AssignedTag` |
+
+#### Exemples d'accès
+##### Liste
+Liste les balises BLE:
+```http
+GET /api/tags
+Accept: application/ld+json
+```
+
+[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/Tag)
+
+### AssignedTag
+Représente l'assignation d'une balise BLE à un compte.
+
+#### Principales propriétés
+| Propriété | Description  |
+|--|--|
+| id | [ULID](https://github.com/ulid/spec#universally-unique-lexicographically-sortable-identifier) de la ressource |
+| createdAt | Date de création |
+| updatedAt | Date de dernière mise à jour |
+| tag | IRI du `Tag` |
+| account | IRI du compte |
+| label | Libellé de la balise |
+| description | Description de la balise |
+| current | Assignation courante (true) / passée (false) |
+| active | Balise active ou non |
+| revokedAt | Date de révocation |
+
+#### Exemples d'accès
+##### Liste
+Liste les balises BLE assignées:
+```http
+GET /api/assigned-tags
+Accept: application/ld+json
+```
+
+[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/AssignedTag)
+
+### AssignedDeviceVehicleData
+Représente les données véhicule associées à une balise (suivi de flotte, consommation, émissions).
+
+#### Principales propriétés
+| Propriété | Description  |
+|--|--|
+| id | [ULID](https://github.com/ulid/spec#universally-unique-lexicographically-sortable-identifier) de la ressource |
+| assignedDevice | IRI de l'`AssignedDevice` |
+| odometerKms | Kilométrage de l'odomètre |
+| odometerDate | Date du relevé d'odomètre |
+| gpsCalculatedKms | Kilométrage calculé par GPS |
+| gpsCalculatedKmsLastUpdateAt | Date de la dernière mise à jour du kilométrage GPS |
+| vehicleType | Type de véhicule |
+| vehicleEnergyType | Type d'énergie du véhicule |
+| fuelConsumptionPer100Kms | Consommation de carburant pour 100 km |
+| fuelConsumptionPerHour | Consommation de carburant par heure |
+| co2EmissionsPer100Kms | Émissions CO2 pour 100 km |
+| co2EmissionsPerHour | Émissions CO2 par heure |
+
+#### Exemples d'accès
+##### Liste
+Liste les données véhicule:
+```http
+GET /api/assigned-device-vehicle-datas
+Accept: application/ld+json
+```
+
+[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/AssignedDeviceVehicleData)
+
+### VehicleData
+Représente un modèle de données de consommation véhicule (template de consommation).
+
+#### Principales propriétés
+| Propriété | Description  |
+|--|--|
+| fuelConsumptionPer100Kms | Consommation de carburant pour 100 km |
+| fuelConsumptionPerHour | Consommation de carburant par heure |
+| co2EmissionsPer100Kms | Émissions CO2 pour 100 km |
+| co2EmissionsPerHour | Émissions CO2 par heure |
+
+#### Exemples d'accès
+##### Liste
+Liste les modèles de données véhicule:
+```http
+GET /api/vehicle-datas
+Accept: application/ld+json
+```
+
+[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/VehicleData)
+
+### RideSection
+Représente une section de trajet / déplacement avec statistiques (distance, vitesse, durée).
+
+#### Principales propriétés
+| Propriété | Description  |
+|--|--|
+| id | [ULID](https://github.com/ulid/spec#universally-unique-lexicographically-sortable-identifier) de la ressource |
+| createdAt | Date de création |
+| assignedDevice | IRI de l'`AssignedDevice` |
+| account | IRI du compte |
+| startDate | Date de début du trajet |
+| startIgnitionDate | Date de démarrage du contact |
+| startMovingDate | Date de début de mouvement |
+| endDate | Date de fin du trajet |
+| endIgnitionDate | Date d'arrêt du contact |
+| endMovingDate | Date de fin de mouvement |
+| distance | Distance parcourue (en mètres) |
+| maxSpeed | Vitesse maximale |
+| averageSpeed | Vitesse moyenne |
+
+#### Exemples d'accès
+##### Liste
+Liste les sections de trajet:
+```http
+GET /api/ride-sections
+Accept: application/ld+json
+```
+
+[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/RideSection)
+
+### AssignedDeviceGrant
+Représente une permission granulaire d'accès à une balise pour un membership spécifique.
+
+#### Principales propriétés
+| Propriété | Description  |
+|--|--|
+| id | [ULID](https://github.com/ulid/spec#universally-unique-lexicographically-sortable-identifier) de la ressource |
+| assignedDevice | IRI de l'`AssignedDevice` |
+| membership | IRI du `Membership` |
+| role | Rôle accordé |
+| granted | Permission accordée (true/false) |
+
+#### Exemples d'accès
+##### Liste
+Liste les permissions sur les balises:
+```http
+GET /api/assigned-device-grants
+Accept: application/ld+json
+```
+
+[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/AssignedDeviceGrant)
+
+### AssignedDeviceUser
+Représente la relation explicite entre un utilisateur et une balise.
+
+#### Principales propriétés
+| Propriété | Description  |
+|--|--|
+| id | [ULID](https://github.com/ulid/spec#universally-unique-lexicographically-sortable-identifier) de la ressource |
+| createdAt | Date de création |
+| assignedDevice | IRI de l'`AssignedDevice` |
+| user | IRI de l'`User` |
+
+#### Exemples d'accès
+##### Liste
+Liste les relations utilisateur-balise:
+```http
+GET /api/assigned-device-users
+Accept: application/ld+json
+```
+
+[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/AssignedDeviceUser)
+
+### TemporaryAssignedDeviceAccess
+Représente un accès temporaire à une balise avec une date d'expiration.
+
+#### Principales propriétés
+| Propriété | Description  |
+|--|--|
+| id | [ULID](https://github.com/ulid/spec#universally-unique-lexicographically-sortable-identifier) de la ressource |
+| createdAt | Date de création |
+| assignedDevice | IRI de l'`AssignedDevice` |
+| endDate | Date de fin de l'accès temporaire |
+| createdBy | IRI de l'utilisateur ayant créé l'accès |
+
+#### Exemples d'accès
+##### Liste
+Liste les accès temporaires:
+```http
+GET /api/temporary-assigned-device-accesses
+Accept: application/ld+json
+```
+
+[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/TemporaryAssignedDeviceAccess)
+
+### AssignedDeviceMode
+Représente l'historique des changements de mode d'une balise.
+
+#### Principales propriétés
+| Propriété | Description  |
+|--|--|
+| id | [ULID](https://github.com/ulid/spec#universally-unique-lexicographically-sortable-identifier) de la ressource |
+| createdAt | Date de création |
+| assignedDevice | IRI de l'`AssignedDevice` |
+| account | IRI du compte |
+| fromState | État précédent |
+| toState | Nouvel état |
+| eventDate | Date de l'événement |
+
+#### Exemples d'accès
+##### Liste
+Liste l'historique des modes:
+```http
+GET /api/assigned-device-modes
+Accept: application/ld+json
+```
+
+[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/AssignedDeviceMode)
+
+### Report
+Représente un rapport généré ou en cours de génération.
+
+#### Principales propriétés
+| Propriété | Description  |
+|--|--|
+| id | [ULID](https://github.com/ulid/spec#universally-unique-lexicographically-sortable-identifier) de la ressource |
+| account | IRI du compte |
+| type | Type de rapport |
+| fileType | Type de fichier (PDF, Excel, etc) |
+| params | Paramètres du rapport |
+| fromDate | Date de début de la période |
+| toDate | Date de fin de la période |
+| status | Statut du rapport (en attente, en cours, terminé, erreur) |
+| details | Détails additionnels |
+| enqueuedAt | Date de mise en file d'attente |
+| startedAt | Date de début de génération |
+| finishedAt | Date de fin de génération |
+| expiresAt | Date d'expiration du rapport |
+
+#### Exemples d'accès
+##### Liste
+Liste les rapports:
+```http
+GET /api/reports
+Accept: application/ld+json
+```
+
+[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/Report)
+
+### App
+Représente un modèle d'application pour la personnalisation (white-labeling).
+
+#### Principales propriétés
+| Propriété | Description  |
+|--|--|
+| name | Nom de l'application |
+| description | Description de l'application |
+| template | Template de l'application |
+| logos | Logos de l'application |
+| loginBackgroundImage | Image de fond de la page de connexion |
+| colors | Palette de couleurs personnalisée |
+| avatars | Avatars disponibles |
+| defaultAvatar | Avatar par défaut |
+| defaultMapsProvider | Fournisseur de cartes par défaut |
+| features | Fonctionnalités de l'application |
+
+#### Exemples d'accès
+##### Liste
+Liste les applications:
+```http
+GET /api/apps
+Accept: application/ld+json
+```
+
+[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/App)
+
+### AccountApp
+Représente la configuration d'application personnalisée pour un compte.
+
+#### Principales propriétés
+| Propriété | Description  |
+|--|--|
+| id | [ULID](https://github.com/ulid/spec#universally-unique-lexicographically-sortable-identifier) de la ressource |
+| createdAt | Date de création |
+| account | IRI du compte |
+| app | IRI de l'`App` |
+| features | Fonctionnalités activées pour ce compte |
+| resolvedFeatures | Fonctionnalités résolues (incluant celles héritées) |
+
+#### Exemples d'accès
+##### Liste
+Liste les configurations d'application:
+```http
+GET /api/account-apps
+Accept: application/ld+json
+```
+
+[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/AccountApp)
+
+### PushSubscription
+Représente un abonnement aux notifications push pour un utilisateur.
+
+#### Principales propriétés
+| Propriété | Description  |
+|--|--|
+| id | [ULID](https://github.com/ulid/spec#universally-unique-lexicographically-sortable-identifier) de la ressource |
+| createdAt | Date de création |
+| user | IRI de l'`User` |
+| type | Type de push (FCM, APNS, etc) |
+| hash | Hash unique de l'abonnement |
+| name | Nom de l'appareil / abonnement |
+| token | Token de l'abonnement |
+
+#### Exemples d'accès
+##### Liste
+Liste les abonnements push:
+```http
+GET /api/push-subscriptions
+Accept: application/ld+json
+```
+
+[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/PushSubscription)
+
+### PrivateModeSession
+Représente une session de mode privé (désactivation temporaire du suivi).
+
+#### Principales propriétés
+| Propriété | Description  |
+|--|--|
+| user | IRI de l'`User` |
+| startDate | Date de début de la session |
+| endDate | Date de fin de la session |
+
+#### Exemples d'accès
+##### Liste
+Liste les sessions de mode privé:
+```http
+GET /api/private-mode-sessions
+Accept: application/ld+json
+```
+
+[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/PrivateModeSession)
+
+### AuthenticationLog
+Représente un log d'authentification (audit trail).
+
+#### Principales propriétés
+| Propriété | Description  |
+|--|--|
+| id | [ULID](https://github.com/ulid/spec#universally-unique-lexicographically-sortable-identifier) de la ressource |
+| createdAt | Date de création |
+| user | IRI de l'`User` |
+
+#### Exemples d'accès
+##### Liste
+Liste les logs d'authentification:
+```http
+GET /api/authentication-logs
+Accept: application/ld+json
+```
+
+[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/AuthenticationLog)
 
 ## Enregistrement et identification utilisateur
 
@@ -338,7 +827,7 @@ Accept: application/ld+json
 
 {
   "username": "me@example.com",
-  "password": "securedPassword",
+  "password": "securedPassword"
 }
 ```
 
@@ -394,7 +883,7 @@ Accept: application/json
 Mercure est un mécanisme PUB/SUB permettant de recevoir les mises à jour des ressources en direct dans un canal HTTP. Votre client HTTP (navigateur ou librairie de votre langage de programmation) doit supporter les SSE (Server-Sent Events).
 
 ### Exemple d'usage
-Ecoute de tous les canaux. Seules les mises à jour permises par votre JWT seront effectivement reçues.
+Écoute de tous les canaux. Seules les mises à jour permises par votre JWT seront effectivement reçues.
 ```http
 GET /.well-known/mercure?topic=*
 Authorization: Bearer [jwt]

@@ -1,0 +1,6 @@
+### List
+GET {{API_BASE_URL}}/api/users
+Accept: application/ld+json, application/json
+Content-Type: application/ld+json
+Cookie: jwt_hp={{jwt_token}}
+
