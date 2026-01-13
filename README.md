@@ -96,10 +96,10 @@ Les topics Mercure correspondent aux IRIs des ressources. Vous pouvez vous abonn
 GET https://api.geonative.app/.well-known/mercure?topic=*
 
 # Les Balises de votre compte
-GET https://api.geonative.app/.well-known/mercure?topic=api/assigned-devices
+GET https://api.geonative.app/.well-known/mercure?topic=/api/assigned-devices
 
 # Balise spécifique
-GET https://api.geonative.app/.well-known/mercure?topic=api/assigned-devices/{id}
+GET https://api.geonative.app/.well-known/mercure?topic=/api/assigned-devices/{id}
 ```
 
 Les mises à jour des ressources sont envoyées automatiquement au format JSON-LD.
