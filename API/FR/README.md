@@ -94,8 +94,6 @@ GET /api/accounts/{account}/last-triggered-alerts-by-alert-policies
 GET /api/accounts/{account}/last-triggered-alerts-by-assigned-devices
 ```
 
-[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/Account)
-
 ### User
 L'utilisateur est le moyen d'identification à l'API et le moyen d'accès aux comptes liés. De la même manière qu'un `Account` peut être accédé depuis plusieurs `User`, un `User` peut accéder à plusieurs `Account`.
 La relation entre un `User` et un `Account` est matérialisée sous la ressource `Membership`.
@@ -119,7 +117,6 @@ Liste les utilisateurs auxquels l'utilisateur courant a accès.
 GET /api/users
 Accept: application/ld+json
 ```
-[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/User)
 
 ###  Membership
 Un `Membership` matérialise la relation entre un `Account` et un `User`.
@@ -143,8 +140,6 @@ GET /api/memberships
 Accept: application/ld+json
 ```
 
-[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/Membership)
-
 ### DeviceModel
 
 Permet de définir les caractéristiques propres à un modèle de balise.
@@ -156,8 +151,6 @@ Permet de définir les caractéristiques propres à un modèle de balise.
 | createdAt | Date de création |
 | name | Nom du modèle |
 | capabilities | Fonctionnalités exposées sur le modèle |
-
-[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/DeviceModel)
 
 ### Device
 
@@ -182,8 +175,6 @@ Liste les `Device` auxquels l'utilisateur courant a accès.
 GET /api/devices
 Accept: application/ld+json
 ```
-
-[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/Device)
 
 ### AssignedDevice
 
@@ -237,9 +228,6 @@ PUT /api/assigned-devices/{id}/update-state
 Content-type: application/json
 ```
 
-[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/AssignedDevice)
-
-
 ### DeviceEvent
 Représente un événement (changement d'état) de la balise.
 
@@ -263,9 +251,6 @@ GET /api/device-events?assignedDevice=[iri]
 Accept: application/ld+json
 ```
 
-[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/DeviceEvent)
-
-
 ### AssignedDeviceGroup
 Représente un groupe de balises.
 
@@ -286,9 +271,6 @@ Liste les groupes:
 GET /api/assigned-device-groups
 Accept: application/ld+json
 ```
-
-[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/AssignedDeviceGroup)
-
 
 ### AlertPolicy
 Représente une configuration d'alerte (police d'alerte).
@@ -321,8 +303,6 @@ Liste les polices d'alerte:
 GET /api/alert-policies
 Accept: application/ld+json
 ```
-
-[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/AlertPolicy)
 
 ### AssignedDeviceTriggeredAlert
 Représente un déclenchement d'alerte.
@@ -364,8 +344,6 @@ POST /api/assigned-device-triggered-alerts/batch-delete/account/{account}
 Content-type: application/json
 ```
 
-[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/AssignedDeviceTriggeredAlert)
-
 ### AssignedDeviceTriggeredAction
 Représente l'exécution d'une action déclenchée par une alerte (logs d'actions).
 
@@ -382,8 +360,6 @@ Liste les actions déclenchées:
 GET /api/assigned-device-triggered-actions
 Accept: application/ld+json
 ```
-
-[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/AssignedDeviceTriggeredAction)
 
 ### Zone
 Représente une zone géographique. Une zone peut être définie soit par un ou plusieurs polygones (MultiPolygon), soit par un point central et une distance (zone circulaire).
@@ -410,8 +386,6 @@ GET /api/zones
 Accept: application/ld+json
 ```
 
-[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/Zone)
-
 ### AssignedDeviceZone
 Représente la relation entre une balise et une zone (historique de présence en zone).
 
@@ -429,8 +403,6 @@ Liste les relations balise-zone:
 GET /api/assigned-device-zones
 Accept: application/ld+json
 ```
-
-[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/AssignedDeviceZone)
 
 ### Tag
 Représente une balise BLE (Bluetooth Low Energy) / beacon physique.
@@ -450,8 +422,6 @@ Liste les balises BLE:
 GET /api/tags
 Accept: application/ld+json
 ```
-
-[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/Tag)
 
 ### AssignedTag
 Représente l'assignation d'une balise BLE à un compte.
@@ -477,8 +447,6 @@ Liste les balises BLE assignées:
 GET /api/assigned-tags
 Accept: application/ld+json
 ```
-
-[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/AssignedTag)
 
 ### AssignedDeviceVehicleData
 Représente les données véhicule associées à une balise (suivi de flotte, consommation, émissions).
@@ -507,8 +475,6 @@ GET /api/assigned-device-vehicle-datas
 Accept: application/ld+json
 ```
 
-[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/AssignedDeviceVehicleData)
-
 ### VehicleData
 Représente un modèle de données de consommation véhicule (template de consommation).
 
@@ -527,8 +493,6 @@ Liste les modèles de données véhicule:
 GET /api/vehicle-datas
 Accept: application/ld+json
 ```
-
-[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/VehicleData)
 
 ### RideSection
 Représente une section de trajet / déplacement avec statistiques (distance, vitesse, durée).
@@ -558,8 +522,6 @@ GET /api/ride-sections
 Accept: application/ld+json
 ```
 
-[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/RideSection)
-
 ### AssignedDeviceGrant
 Représente une permission granulaire d'accès à une balise pour un membership spécifique.
 
@@ -580,8 +542,6 @@ GET /api/assigned-device-grants
 Accept: application/ld+json
 ```
 
-[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/AssignedDeviceGrant)
-
 ### AssignedDeviceUser
 Représente la relation explicite entre un utilisateur et une balise.
 
@@ -600,8 +560,6 @@ Liste les relations utilisateur-balise:
 GET /api/assigned-device-users
 Accept: application/ld+json
 ```
-
-[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/AssignedDeviceUser)
 
 ### TemporaryAssignedDeviceAccess
 Représente un accès temporaire à une balise avec une date d'expiration.
@@ -622,8 +580,6 @@ Liste les accès temporaires:
 GET /api/temporary-assigned-device-accesses
 Accept: application/ld+json
 ```
-
-[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/TemporaryAssignedDeviceAccess)
 
 ### AssignedDeviceMode
 Représente l'historique des changements de mode d'une balise.
@@ -646,8 +602,6 @@ Liste l'historique des modes:
 GET /api/assigned-device-modes
 Accept: application/ld+json
 ```
-
-[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/AssignedDeviceMode)
 
 ### Report
 Représente un rapport généré ou en cours de génération.
@@ -677,8 +631,6 @@ GET /api/reports
 Accept: application/ld+json
 ```
 
-[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/Report)
-
 ### App
 Représente un modèle d'application pour la personnalisation (white-labeling).
 
@@ -704,8 +656,6 @@ GET /api/apps
 Accept: application/ld+json
 ```
 
-[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/App)
-
 ### AccountApp
 Représente la configuration d'application personnalisée pour un compte.
 
@@ -726,8 +676,6 @@ Liste les configurations d'application:
 GET /api/account-apps
 Accept: application/ld+json
 ```
-
-[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/AccountApp)
 
 ### PushSubscription
 Représente un abonnement aux notifications push pour un utilisateur.
@@ -751,8 +699,6 @@ GET /api/push-subscriptions
 Accept: application/ld+json
 ```
 
-[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/PushSubscription)
-
 ### PrivateModeSession
 Représente une session de mode privé (désactivation temporaire du suivi).
 
@@ -771,8 +717,6 @@ GET /api/private-mode-sessions
 Accept: application/ld+json
 ```
 
-[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/PrivateModeSession)
-
 ### AuthenticationLog
 Représente un log d'authentification (audit trail).
 
@@ -790,8 +734,6 @@ Liste les logs d'authentification:
 GET /api/authentication-logs
 Accept: application/ld+json
 ```
-
-[Documentation OpenAPI](https://api.geonative.app/api/docs?ui=re_doc#tag/AuthenticationLog)
 
 ## Enregistrement et identification utilisateur
 

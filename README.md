@@ -4,12 +4,53 @@ Documentation officielle de l'API de la plateforme IoT MyGeoNative.
 
 ### Documentation utilisateur
 
-- 📖 **[Documentation API](./API/FR/README.md)** - Documentation complète
-- 🌐 **[Documentation Swagger](https://geonativefr.github.io/public-documentation/)** - Interface interactive OpenAPI
+- 📖 **[Documentation API complète (Français)](./API/FR/README.md)**
+- 📖 **[Documentation Swagger](./API/openapi/openapi.html)**
 
-Cette documentation détaille l'ensemble des ressources disponibles.
+Cette documentation détaille l'ensemble des ressources disponibles, incluant :
 
-### OpenAPI
+#### Gestion des utilisateurs et comptes
+- Account, User, Membership
+- Authentification JWT
+- Gestion des rôles et permissions
+
+#### Gestion des balises et dispositifs
+- Device, DeviceModel, AssignedDevice
+- DeviceEvent (historique des événements)
+- AssignedDeviceGroup (groupes de balises)
+
+#### Système d'alertes
+- AlertPolicy (configuration des alertes)
+- AssignedDeviceTriggeredAlert (alertes déclenchées)
+- AssignedDeviceTriggeredAction (actions exécutées)
+
+#### Géolocalisation et zones
+- Zone (zones géographiques)
+- AssignedDeviceZone (historique de présence)
+
+#### Balises BLE
+- Tag (balises Bluetooth)
+- AssignedTag (assignations de balises BLE)
+
+#### Gestion de flotte
+- AssignedDeviceVehicleData (données véhicule)
+- VehicleData (templates de consommation)
+- RideSection (trajets et statistiques)
+
+#### Contrôle d'accès avancé
+- AssignedDeviceGrant (permissions granulaires)
+- AssignedDeviceUser (relations utilisateur-balise)
+- TemporaryAssignedDeviceAccess (accès temporaires)
+
+#### Fonctionnalités additionnelles
+- Report (génération de rapports)
+- App / AccountApp (personnalisation white-label)
+- PushSubscription (notifications push)
+- PrivateModeSession (mode privé)
+- AuthenticationLog (logs d'audit)
+- AssignedDeviceMode (historique des modes)
+
+### Spécification OpenAPI
 
 La spécification OpenAPI complète est disponible dans deux formats :
 
